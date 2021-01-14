@@ -20,13 +20,15 @@ export class IJEData {
     private _page: IJEPage;
     private _sort: IJESort;
 
-    private _forceKeyUppercase = true;
+    private _forceKeyUppercase: boolean;
+    private _defaultLanguageFileName: string;
 
     get languages() { return this.languages; }
     get translations() { return this._translations; }
 
-    constructor(private _manager: IJEManager, forceKeyUppercase = true) {
+    constructor(private _manager: IJEManager, forceKeyUppercase: boolean, defaultLanguageFileName: string) {
         this._forceKeyUppercase = forceKeyUppercase;
+        this._defaultLanguageFileName = defaultLanguageFileName;
         this._loadFiles();
         this._defaultValues();
     }
@@ -43,7 +45,7 @@ export class IJEData {
         }
 
         this._page = {
-            pageSize: 10,
+            pageSize: 300,
             pageNumber: 1
         }
     }
@@ -53,7 +55,7 @@ export class IJEData {
 
         const translate: any = {};
         const keys: string[] = [];
-        files.filter(f => f.endsWith('.json')).forEach((file: string) => {
+        files.filter(f => f.endsWith('.json') || f.endsWith('.arb')).forEach((file: string) => {
             var language = file;
             this._languages.push(language);
 
@@ -150,6 +152,13 @@ export class IJEData {
             this._translations.filter(translation => translation.valid)
                 .sort((a, b) => a.key > b.key ? 1 : -1)
                 .forEach(translation => {
+                    if (!translation.languages[language]) {
+                        if (this._defaultLanguageFileName != null 
+                            && this._defaultLanguageFileName != "" 
+                            && translation.languages[this._defaultLanguageFileName]) {
+                                translation.languages[language] = translation.languages[this._defaultLanguageFileName];
+                        } 
+                    }
                     if (translation.languages[language]) {
                         this._transformKeysValues(translation.key, translation.languages[language], o);
                     }
@@ -158,6 +167,7 @@ export class IJEData {
             const json = JSON.stringify(o, null, 2);
             fs.writeFileSync(_path.join(this._manager.dirPath, language), json);
         });
+        this._manager.refreshDataTable();
     }
 
     search(value: string) {

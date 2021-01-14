@@ -1,0 +1,9 @@
+{
+  "@@locale": "en",
+  "communityChannel": "Community",
+  "databaseChannel": "Database",
+  "followLongAgoMatchErrorTips": "You can only select recent games",
+  "matchChannel": "Game",
+  "myChannel": "My",
+  "myTeamsChannel": "My Teams"
+}

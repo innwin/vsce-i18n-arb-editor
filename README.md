@@ -1,14 +1,18 @@
-# i18n-json-editor
+# i18n-arb-editor
 
-i18n-json-editor is a Visual Studio Code extension to easily edit your translations files
+copy from https://github.com/thibault-vanderseypen/vsce-i18n-json-editor
+
+i18n-arb-editor is a Visual Studio Code extension to easily edit your translations files
 
 ## Usage
 
-Right click on a directory containing **i18n** and select : **i18n JSON Editor**
+Right click on a directory containing **i18n** and select : **i18n arb Editor**
 
 ![extension demo](demo.gif)
 
 
 ## Configuration 
 
-- i18nJsonEditor.forceKeyUPPERCASE : Force the keys to uppercase (default : true)
+- i18nArbEditor.forceKeyUPPERCASE : Force the keys to uppercase (default : false)
+
+- i18nArbEditor.defaultLanguageFileName : Default language file name (default : intl_zh_CN.arb)

@@ -1,16 +1,16 @@
 {
-	"name": "i18n-json-editor",
-	"displayName": "i18n json editor",
+	"name": "i18n-arb-editor",
+	"displayName": "i18n arb editor",
 	"author": {
-		"name": "Thibault Vanderseypen",
-		"url": "https://vanderseypen.dev"
+		"name": "innwin",
+		"url": "https://github.com/innwin"
 	},
-	"publisher": "thibault-vanderseypen",
+	"publisher": "innwin",
 	"repository": {
-		"url": "https://github.com/thibault-vanderseypen/vsce-i18n-json-editor.git"
+		"url": "https://github.com/innwin/vsce-i18n-arb-editor.git"
 	},
-	"description": "Easily edit your i18n json files",
-	"version": "1.1.2",
+	"description": "Easily edit your i18n arb files",
+	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.30.0"
 	},
@@ -18,34 +18,38 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:i18n-json-editor"
+		"onCommand:i18n-arb-editor"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "i18n-json-editor",
-				"title": "i18n json editor"
+				"command": "i18n-arb-editor",
+				"title": "i18n arb editor"
 			}
 		],
 		"menus": {
 			"explorer/context": [
 				{
-					"command": "i18n-json-editor",
+					"command": "i18n-arb-editor",
 					"group": "2_workspace",
-					"when": "explorerResourceIsFolder && resourceFilename =~ /i18n/"
+					"when": "explorerResourceIsFolder && (resourceFilename =~ /i18n/ || resourceFilename =~ /l10n/)"
 				}
 			]
 		},
 		"configuration": {
-			"title": "i18n json editor",
+			"title": "i18n arb editor",
 			"properties": {
-			  "i18nJsonEditor.forceKeyUPPERCASE": {
-					"default": true,
+				"i18nArbEditor.forceKeyUPPERCASE": {
+					"default": false,
 					"type": "boolean",
 					"description": "Force the keys to uppercase"
-			
-			  }
+				},
+				"i18nArbEditor.defaultLanguageFileName": {
+					"default": "intl_zh_CN.arb",
+					"type": "string",
+					"description": "Default language file name"
+				}
 			}
 		}
 	},
@@ -58,13 +62,13 @@
 		"test": "node ./out/test/runTest.js"
 	},
 	"devDependencies": {
-		"@types/vscode": "^1.30.0",
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^7.0.2",
 		"@types/node": "^13.11.0",
-		"eslint": "^6.8.0",
-		"@typescript-eslint/parser": "^2.30.0",
+		"@types/vscode": "^1.30.0",
 		"@typescript-eslint/eslint-plugin": "^2.30.0",
+		"@typescript-eslint/parser": "^2.30.0",
+		"eslint": "^6.8.0",
 		"glob": "^7.1.6",
 		"mocha": "^7.1.2",
 		"typescript": "^3.8.3",
