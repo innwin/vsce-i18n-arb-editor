@@ -22,13 +22,15 @@ export class IJEData {
 
     private _forceKeyUppercase: boolean;
     private _defaultLanguageFileName: string;
+    private _descriptionFileName: string;
 
     get languages() { return this.languages; }
     get translations() { return this._translations; }
 
-    constructor(private _manager: IJEManager, forceKeyUppercase: boolean, defaultLanguageFileName: string) {
+    constructor(private _manager: IJEManager, forceKeyUppercase: boolean, defaultLanguageFileName: string, descriptionFileName: string) {
         this._forceKeyUppercase = forceKeyUppercase;
         this._defaultLanguageFileName = defaultLanguageFileName;
+        this._descriptionFileName = descriptionFileName;
         this._loadFiles();
         this._defaultValues();
     }
@@ -77,6 +79,9 @@ export class IJEData {
             }
         });
 
+        this._languageMoveToFirst(this._defaultLanguageFileName);
+        this._languageMoveToFirst(this._descriptionFileName);
+
         keys.forEach((key: string) => {
             const languages: any = {};
             this._languages.forEach((language: string) => {
@@ -89,6 +94,15 @@ export class IJEData {
             t.languages = languages;
             this._insert(t);
         });
+    }
+
+    private _languageMoveToFirst(language: string) {
+        if (language != null && language != "") {
+            let languageIndex = this._languages.indexOf(language);
+            if (languageIndex > -1) {
+                this._languages = this._languages.splice(languageIndex, 1).concat(this._languages);
+            }
+        }
     }
 
     add() {

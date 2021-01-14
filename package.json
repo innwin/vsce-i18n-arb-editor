@@ -10,7 +10,7 @@
 		"url": "https://github.com/innwin/vsce-i18n-arb-editor.git"
 	},
 	"description": "Easily edit your i18n arb files",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"engines": {
 		"vscode": "^1.30.0"
 	},
@@ -49,6 +49,11 @@
 					"default": "intl_zh_CN.arb",
 					"type": "string",
 					"description": "Default language file name"
+				},
+				"i18nArbEditor.descriptionFileName": {
+					"default": "intl_description.json",
+					"type": "string",
+					"description": "Description file name"
 				}
 			}
 		}

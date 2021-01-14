@@ -12,7 +12,10 @@ export class IJEManager {
     constructor(private _context: vscode.ExtensionContext, private _configuration: vscode.WorkspaceConfiguration, private _panel: vscode.WebviewPanel, public dirPath: string) {
         const forceKeyUppercase = _configuration.get<boolean>('i18nArbEditor.forceKeyUPPERCASE');
         const defaultLanguageFileName = _configuration.get<string>('i18nArbEditor.defaultLanguageFileName');
-        this._data = new IJEData(this, forceKeyUppercase != undefined ? forceKeyUppercase : false, defaultLanguageFileName != undefined ? defaultLanguageFileName : null);
+        const descriptionFileName = _configuration.get<string>('i18nArbEditor.descriptionFileName');
+        this._data = new IJEData(this, forceKeyUppercase != undefined ? forceKeyUppercase : false, 
+            defaultLanguageFileName != undefined ? defaultLanguageFileName : null, 
+            descriptionFileName != undefined ? descriptionFileName : null);
         this._initEvents();
         _panel.webview.html = this.getTemplate();
     }
