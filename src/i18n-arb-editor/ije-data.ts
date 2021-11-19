@@ -12,6 +12,10 @@ import { IJEDataRenderUtil } from './ije-data-render-util';
 
 export class IJEData {
 
+    // https://github.com/compulim/node-opencc
+    // https://github.com/BYVoid/OpenCC
+    private opencc = require('node-opencc');
+
     private _languages: string[] = [];
     private _translations: IJEDataTranslation[] = [];
     private _searchPattern: string = '';
@@ -170,7 +174,13 @@ export class IJEData {
                         if (this._defaultLanguageFileName != null 
                             && this._defaultLanguageFileName != "" 
                             && translation.languages[this._defaultLanguageFileName]) {
-                                translation.languages[language] = translation.languages[this._defaultLanguageFileName];
+                                if(language.indexOf("zh_HK") > -1) {                                    
+                                    translation.languages[language] = this.opencc.simplifiedToHongKong(translation.languages[this._defaultLanguageFileName]);
+                                } else if(language.indexOf("zh_TW") > -1) {                                    
+                                    translation.languages[language] = this.opencc.simplifiedToTaiwan(translation.languages[this._defaultLanguageFileName]);
+                                } else {
+                                    translation.languages[language] = translation.languages[this._defaultLanguageFileName];
+                                }
                         } 
                     }
                     if (translation.languages[language]) {

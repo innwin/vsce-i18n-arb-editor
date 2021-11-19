@@ -1,0 +1,9 @@
+{
+  "@@locale": "zh_HK",
+  "communityChannel": "社區",
+  "databaseChannel": "資料",
+  "followLongAgoMatchErrorTips": "只能關注近期賽事",
+  "matchChannel": "比賽",
+  "myChannel": "我的",
+  "myTeamsChannel": "My teams"
+}
