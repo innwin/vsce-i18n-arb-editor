@@ -16,6 +16,6 @@ Right click on a directory containing **i18n** and select : **i18n arb Editor**
 
 - i18nArbEditor.forceKeyUPPERCASE : Force the keys to uppercase (default : false)
 
-- i18nArbEditor.defaultLanguageFileName : Default language file name (default : intl_zh_CN.arb)
+- i18nArbEditor.defaultLanguageFileName : Default language file name (default : zh.json)
 
-- i18nArbEditor.descriptionFileName : Description file name (default : intl_description.json)
+- i18nArbEditor.descriptionFileName : Description file name (default : description.json)

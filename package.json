@@ -10,7 +10,7 @@
 		"url": "https://github.com/innwin/vsce-i18n-arb-editor.git"
 	},
 	"description": "Easily edit your i18n arb files",
-	"version": "1.2.0",
+	"version": "1.4.1",
 	"engines": {
 		"vscode": "^1.30.0"
 	},
@@ -46,12 +46,12 @@
 					"description": "Force the keys to uppercase"
 				},
 				"i18nArbEditor.defaultLanguageFileName": {
-					"default": "intl_zh_CN.arb",
+					"default": "zh.json",
 					"type": "string",
 					"description": "Default language file name"
 				},
 				"i18nArbEditor.descriptionFileName": {
-					"default": "intl_description.json",
+					"default": "description.json",
 					"type": "string",
 					"description": "Description file name"
 				}
