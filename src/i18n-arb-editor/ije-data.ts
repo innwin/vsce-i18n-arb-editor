@@ -174,11 +174,11 @@ export class IJEData {
                         if (this._defaultLanguageFileName != null 
                             && this._defaultLanguageFileName != "" 
                             && translation.languages[this._defaultLanguageFileName]) {
-                                if(language.indexOf("zh_HK") > -1 || language.indexOf("zh-Hant-HK") > -1 || language.indexOf("zh-Hant-MO") > -1) {                                    
+                                if(language.indexOf("zh_HK") > -1 || language.indexOf("zh-HK") > -1 || language.indexOf("zh-Hant-HK") > -1 || language.indexOf("zh_Hant_HK") > -1 || language.indexOf("zh-Hant-MO") > -1 || language.indexOf("zh_Hant_MO") > -1) {                                    
                                     translation.languages[language] = this.opencc.simplifiedToHongKong(translation.languages[this._defaultLanguageFileName]);
-                                } else if(language.indexOf("zh_TW") > -1 || language.indexOf("zh-Hant-TW") > -1) {                                    
+                                } else if(language.indexOf("zh_TW") > -1 || language.indexOf("zh-TW") > -1 || language.indexOf("zh-Hant-TW") > -1 || language.indexOf("zh_Hant_TW") > -1) {                                    
                                     translation.languages[language] = this.opencc.simplifiedToTaiwan(translation.languages[this._defaultLanguageFileName]);
-                                } else if(language.indexOf("zh-Hant") > -1) {                                    
+                                } else if(language.indexOf("zh_Hant") > -1 || language.indexOf("zh-Hant") > -1) {                                    
                                     translation.languages[language] = this.opencc.simplifiedToHongKong(translation.languages[this._defaultLanguageFileName]);
                                 } else {
                                     translation.languages[language] = translation.languages[this._defaultLanguageFileName];
