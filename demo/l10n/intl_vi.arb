@@ -1,0 +1,16 @@
+{
+  "@@locale": "vi",
+  "appearance": "Bề ngoài",
+  "automaticLockScreen": "Tự động khóa màn hình ",
+  "cleanAppCache": "Xóa bộ nhớ",
+  "cleanAppCacheSuccess": "Xóa bộ nhớ thành công: {cleanAppCacheSizeText}",
+  "followSystem": "Hệ thống",
+  "language": "Ngôn ngữ",
+  "login": "Đăng nhập",
+  "settingPageCheckForUpdate": "Kiểm tra cập nhật",
+  "settingPageCurrentVersion": "Phiên bản hiện nay: {version}",
+  "settingPageNewVersionFound": "Có phiên bản mới: {version}",
+  "settingPageTitle": "Cài đặt",
+  "themeModeDark": "Chế độ nền tối",
+  "themeModeLight": "Chế độ nền sáng"
+}

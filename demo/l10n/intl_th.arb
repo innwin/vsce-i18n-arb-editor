@@ -1,0 +1,16 @@
+{
+  "@@locale": "th",
+  "appearance": "รูปร่าง ",
+  "automaticLockScreen": "ล็อคหน้าจออัตโนมัติ",
+  "cleanAppCache": "ล้างแคช",
+  "cleanAppCacheSuccess": "ล้างแคชเรียบร้อยแล้ว：{cleanAppCacheSizeText}",
+  "followSystem": "ตามระบบ",
+  "language": "ภาษา",
+  "login": "เข้า สู่ ระบบ",
+  "settingPageCheckForUpdate": "เช็คการอัพเดท",
+  "settingPageCurrentVersion": "เวอร์ชั่นตอนนี้ : {version}",
+  "settingPageNewVersionFound": "มีเวอร์ชั่นใหม่: {version}",
+  "settingPageTitle": "การตั้งค่า",
+  "themeModeDark": "โหมดกลางคืน",
+  "themeModeLight": "โหมดสีอ่อน"
+}

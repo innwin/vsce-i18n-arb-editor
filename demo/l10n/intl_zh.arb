@@ -1,0 +1,53 @@
+{
+  "@@locale": "zh",
+  "appearance": "外观",
+  "@appearance": {
+    "description": "[设置页面] - 外观设置标题"
+  },
+  "automaticLockScreen": "自动锁屏",
+  "@automaticLockScreen": {
+    "description": "[设置页面] - 自动锁屏设置标题"
+  },
+  "cleanAppCache": "清理缓存",
+  "@cleanAppCache": {
+    "description": "[设置页面] - 清理缓存操作标题"
+  },
+  "cleanAppCacheSuccess": "成功清理缓存：{cleanAppCacheSizeText}",
+  "@cleanAppCacheSuccess": {
+    "description": "[设置页面] - 成功清理缓存提示语"
+  },
+  "followSystem": "跟随系统",
+  "@followSystem": {
+    "description": "[设置页面] - 跟随系统选项文字"
+  },
+  "language": "语言",
+  "@language": {
+    "description": "[设置页面] - 语言设置标题"
+  },
+  "login": "登录",
+  "setting": "设置",
+  "settingPageCheckForUpdate": "检查更新",
+  "@settingPageCheckForUpdate": {
+    "description": "[设置页面] - 检查更新"
+  },
+  "settingPageCurrentVersion": "当前版本 : {version}",
+  "@settingPageCurrentVersion": {
+    "description": "[设置页面] - [检查更新] - 当前版本"
+  },
+  "settingPageNewVersionFound": "发现新版 : {version}",
+  "@settingPageNewVersionFound": {
+    "description": "[设置页面] - [检查更新] - 发现新版"
+  },
+  "settingPageTitle": "设置",
+  "@settingPageTitle": {
+    "description": "[设置页面] - 标题"
+  },
+  "themeModeDark": "深色模式",
+  "@themeModeDark": {
+    "description": "[设置页面] - 深色模式选项文字"
+  },
+  "themeModeLight": "浅色模式",
+  "@themeModeLight": {
+    "description": "[设置页面] - 浅色模式选项文字"
+  }
+}

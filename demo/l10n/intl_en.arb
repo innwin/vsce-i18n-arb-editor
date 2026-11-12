@@ -1,9 +1,16 @@
 {
   "@@locale": "en",
-  "communityChannel": "Community",
-  "databaseChannel": "Database",
-  "followLongAgoMatchErrorTips": "You can only select recent games",
-  "matchChannel": "Game",
-  "myChannel": "My",
-  "myTeamsChannel": "My Teams"
+  "appearance": "Appearance",
+  "automaticLockScreen": "Auto-Lock",
+  "cleanAppCache": "Clear Cache",
+  "cleanAppCacheSuccess": "Cache Cleared: {cleanAppCacheSizeText}",
+  "followSystem": "Follow the system",
+  "language": "Language",
+  "login": "login",
+  "settingPageCheckForUpdate": "Check for Updates",
+  "settingPageCurrentVersion": "Current Version : {version}",
+  "settingPageNewVersionFound": "New Version : {version}",
+  "settingPageTitle": "Setting",
+  "themeModeDark": "Dark Mode",
+  "themeModeLight": "Light Mode"
 }
