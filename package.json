@@ -10,7 +10,7 @@
 		"url": "https://github.com/innwin/vsce-i18n-arb-editor.git"
 	},
 	"description": "Easily edit your i18n arb files",
-	"version": "1.4.2",
+	"version": "1.5.0",
 	"engines": {
 		"vscode": "^1.30.0"
 	},
