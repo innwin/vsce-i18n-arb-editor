@@ -187,7 +187,7 @@ export class IJEData {
             let o = {};
 
             this._translations.filter(translation => translation.valid)
-                .sort((a, b) => a.key > b.key ? 1 : -1)
+                .sort((a, b) => this._compareSaveKeys(a.key, b.key))
                 .forEach(translation => {
                     if (translation.key.indexOf('@') === -1 && !translation.languages[language]) {
                         if (this._defaultLanguageFileName != null 
@@ -268,6 +268,48 @@ export class IJEData {
     switchView(view: IJEViewType) {
         this._view.type = view;
         this._manager.refreshDataTable();
+    }
+
+    // Save order: `@@` keys first, then plain keys each immediately followed by
+    // their `@key` metadata, then any other key containing `@`.
+    private _getSaveKeyRank(key: string) {
+        if (key.indexOf('@@') === 0) {
+            return 0;
+        }
+        return key.indexOf('@') <= 0 ? 1 : 2;
+    }
+
+    private _isSaveMetadataKey(key: string) {
+        return key.indexOf('@') === 0 && key.indexOf('@@') !== 0;
+    }
+
+    // `@name.description` sorts under `name`, the key it describes.
+    private _getSaveKeyOwner(key: string) {
+        if (!this._isSaveMetadataKey(key)) {
+            return key;
+        }
+        const dot = key.indexOf('.');
+        return key.substring(1, dot > -1 ? dot : key.length);
+    }
+
+    private _compareStrings(a: string, b: string) {
+        return a > b ? 1 : (a < b ? -1 : 0);
+    }
+
+    private _compareSaveKeys(a: string, b: string) {
+        const rank = this._getSaveKeyRank(a) - this._getSaveKeyRank(b);
+        if (rank !== 0) {
+            return rank;
+        }
+        const owner = this._compareStrings(this._getSaveKeyOwner(a), this._getSaveKeyOwner(b));
+        if (owner !== 0) {
+            return owner;
+        }
+        const metadata = Number(this._isSaveMetadataKey(a)) - Number(this._isSaveMetadataKey(b));
+        if (metadata !== 0) {
+            return metadata;
+        }
+        return this._compareStrings(a, b);
     }
 
     private _transformKeysValues(key: string, value: string, o = {}) {
