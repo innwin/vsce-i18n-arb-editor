@@ -7,6 +7,7 @@
   "followSystem": "Hệ thống",
   "language": "Ngôn ngữ",
   "login": "Đăng nhập",
+  "setting": "设置",
   "settingPageCheckForUpdate": "Kiểm tra cập nhật",
   "settingPageCurrentVersion": "Phiên bản hiện nay: {version}",
   "settingPageNewVersionFound": "Có phiên bản mới: {version}",

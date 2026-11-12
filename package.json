@@ -46,7 +46,7 @@
 					"description": "Force the keys to uppercase"
 				},
 				"i18nArbEditor.defaultLanguageFileName": {
-					"default": "zh.json",
+					"default": "intl_zh.arb",
 					"type": "string",
 					"description": "Default language file name"
 				},

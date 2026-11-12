@@ -12,7 +12,8 @@
 			"request": "launch",
 			"runtimeExecutable": "${execPath}",
 			"args": [
-				"--extensionDevelopmentPath=${workspaceFolder}"
+				"--extensionDevelopmentPath=${workspaceFolder}",
+				"--disable-extension=Google.arb-editor"
 			],
 			"outFiles": [
 				"${workspaceFolder}/out/**/*.js"
@@ -27,6 +28,7 @@
 			"runtimeExecutable": "${execPath}",
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}",
+				"--disable-extension=Google.arb-editor",
 				"--extensionTestsPath=${workspaceFolder}/out/test/suite/index"
 			],
 			"outFiles": [

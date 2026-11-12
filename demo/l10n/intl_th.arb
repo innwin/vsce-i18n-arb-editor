@@ -7,6 +7,7 @@
   "followSystem": "ตามระบบ",
   "language": "ภาษา",
   "login": "เข้า สู่ ระบบ",
+  "setting": "设置",
   "settingPageCheckForUpdate": "เช็คการอัพเดท",
   "settingPageCurrentVersion": "เวอร์ชั่นตอนนี้ : {version}",
   "settingPageNewVersionFound": "มีเวอร์ชั่นใหม่: {version}",

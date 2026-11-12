@@ -7,6 +7,7 @@
   "followSystem": "跟隨系統",
   "language": "語言",
   "login": "登录",
+  "setting": "設置",
   "settingPageCheckForUpdate": "檢查更新",
   "settingPageCurrentVersion": "當前版本 : {version}",
   "settingPageNewVersionFound": "發現新版 : {version}",

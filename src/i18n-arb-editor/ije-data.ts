@@ -27,8 +27,9 @@ export class IJEData {
     private _forceKeyUppercase: boolean;
     private _defaultLanguageFileName: string;
     private _descriptionFileName: string;
+    private _virtualLanguages: string[] = [];
 
-    get languages() { return this.languages; }
+    get languages() { return this._languages; }
     get translations() { return this._translations; }
 
     constructor(private _manager: IJEManager, forceKeyUppercase: boolean, defaultLanguageFileName: string, descriptionFileName: string) {
@@ -63,11 +64,12 @@ export class IJEData {
         const keys: string[] = [];
         files.filter(f => f.endsWith('.json') || f.endsWith('.arb')).forEach((file: string) => {
             var language = file;
-            this._languages.push(language);
 
             try {
                 let rawdata = fs.readFileSync(_path.join(this._manager.dirPath, file));
                 let content = JSON.parse(rawdata.toString());
+
+                this._languages.push(language);
 
                 let keysValues = this._getKeysValues(content)
 
@@ -83,13 +85,24 @@ export class IJEData {
             }
         });
 
+        if (this._descriptionFileName != null
+            && this._descriptionFileName != ""
+            && this._languages.indexOf(this._descriptionFileName) === -1) {
+            const descriptions = this._getDescriptions(translate[this._defaultLanguageFileName]);
+            if (Object.keys(descriptions).length > 0) {
+                this._languages.push(this._descriptionFileName);
+                this._virtualLanguages.push(this._descriptionFileName);
+                translate[this._descriptionFileName] = descriptions;
+            }
+        }
+
         this._languageMoveToFirst(this._defaultLanguageFileName);
         this._languageMoveToFirst(this._descriptionFileName);
 
         keys.forEach((key: string) => {
             const languages: any = {};
             this._languages.forEach((language: string) => {
-                const value = translate[language][key];
+                const value = translate[language] && translate[language][key];
                 languages[language] = value ? value : '';
             });
 
@@ -140,10 +153,14 @@ export class IJEData {
     render() {
         let render = '';
         let translations = this._getDisplayedTranslations();
+        let selection = this._get(this._view.selectionId);
+        if (!selection || selection.key.indexOf('@') > -1) {
+            selection = translations.length > 0 ? translations[0] : undefined;
+        }
 
         switch (this._view.type) {
             case IJEViewType.LIST:
-                render += IJEDataRenderUtil.renderList(translations, this._get(this._view.selectionId), this._languages, this._page, this._sort);
+                render += IJEDataRenderUtil.renderList(translations, selection, this._languages, this._page, this._sort);
                 break;
             case IJEViewType.TABLE:
                 render += IJEDataRenderUtil.renderTable(translations, this._languages, this._page, this._sort);
@@ -164,13 +181,15 @@ export class IJEData {
     }
     
     save() {
-        this._languages.forEach(language => {
+        this._languages
+            .filter(language => this._virtualLanguages.indexOf(language) === -1)
+            .forEach(language => {
             let o = {};
 
             this._translations.filter(translation => translation.valid)
                 .sort((a, b) => a.key > b.key ? 1 : -1)
                 .forEach(translation => {
-                    if (!translation.languages[language]) {
+                    if (translation.key.indexOf('@') === -1 && !translation.languages[language]) {
                         if (this._defaultLanguageFileName != null 
                             && this._defaultLanguageFileName != "" 
                             && translation.languages[this._defaultLanguageFileName]) {
@@ -226,6 +245,9 @@ export class IJEData {
             this._view.selectionId = id;
             if (language) {
                 translation.languages[language] = value.replace(/\\n/g, '\n');
+                if (this._virtualLanguages.indexOf(language) > -1) {
+                    this._updateDefaultDescription(translation.key, translation.languages[language]);
+                }
                 this._validate(translation);
             } else {
                 const newKey = this._forceKeyUppercase ? value.toUpperCase() : value;
@@ -262,6 +284,8 @@ export class IJEData {
     }
 
     private _getKeysValues(obj: any, _key = '') {
+        // Keep metadata in the model so saving an ARB file preserves it. These
+        // keys are excluded from the displayed translations below.
         let kv: any = {};
         for (let key in obj) {
             if (typeof obj[key] !== 'string') {
@@ -271,6 +295,46 @@ export class IJEData {
             }
         }
         return kv;
+    }
+
+    private _getDescriptions(values: any) {
+        const descriptions: { [key: string]: string } = {};
+        if (!values) {
+            return descriptions;
+        }
+
+        Object.keys(values).forEach(key => {
+            if (key.indexOf('@@') === 0 || key.indexOf('@') !== 0) {
+                return;
+            }
+
+            const descriptionKey = key.substring(1);
+            if (descriptionKey.endsWith('.description')) {
+                const translationKey = descriptionKey.substring(0, descriptionKey.length - '.description'.length);
+                if (translationKey !== '' && typeof values[key] === 'string') {
+                    descriptions[translationKey] = values[key];
+                }
+            } else if (descriptionKey.indexOf('.') === -1 && typeof values[key] === 'string') {
+                descriptions[descriptionKey] = values[key];
+            }
+        });
+
+        return descriptions;
+    }
+
+    private _updateDefaultDescription(key: string, value: string) {
+        const descriptionKey = `@${key}.description`;
+        const directDescriptionKey = `@${key}`;
+        let description = this._translations.find(t =>
+            t.key === descriptionKey || t.key === directDescriptionKey);
+        if (description && this._defaultLanguageFileName) {
+            description.languages[this._defaultLanguageFileName] = value;
+        } else if (!description && value && this._defaultLanguageFileName) {
+            description = this._createFactoryIJEDataTranslation();
+            description.key = descriptionKey;
+            description.languages[this._defaultLanguageFileName] = value;
+            this._insert(description);
+        }
     }
 
     private _get(id: number): IJEDataTranslation {
@@ -306,7 +370,9 @@ export class IJEData {
                 this._validatePath(i, true).length === 0)) {
                 i.valid = true;
                 i.error = '';
-                this._manager.updateTranslation(i);
+                if (!this._isHiddenTranslation(i)) {
+                    this._manager.updateTranslation(i);
+                }
             }
         })
     }
@@ -333,9 +399,13 @@ export class IJEData {
         const splitKey = (key !== undefined ? key : translation.key).split('.');
 
         return this._translations.filter(t => {
-            if (translation.id == t.id || t.valid != valid) return false;
+            if (translation.id == t.id || t.valid != valid || this._isHiddenTranslation(t)) return false;
             return this._comparePath(splitKey, t.key.split('.'));
         });
+    }
+
+    private _isHiddenTranslation(translation: IJEDataTranslation) {
+        return translation.key.indexOf('@') > -1;
     }
 
     private _comparePath(a: string[], b: string[]) {
@@ -348,6 +418,9 @@ export class IJEData {
         var o = this._translations
             .filter(
                 t => {
+                    if (this._isHiddenTranslation(t)) {
+                        return false;
+                    }
                     let match = false;
                     var regex = new RegExp(`${this._searchPattern}`, "gmi");
                     match = t.key === '' || regex.test(t.key);

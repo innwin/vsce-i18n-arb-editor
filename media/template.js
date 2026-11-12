@@ -13,9 +13,12 @@ var vscode;
                 const t = message.translation;
                 if (t) {
                     const el = document.getElementById(`input-key-${t.id}`);
-                    el.value = t.key;
-                    t.valid ? el.classList.remove('is-invalid') : el.classList.add('is-invalid');
-                    document.getElementById(`input-key-${t.id}-feedback`).innerText = t.error;
+                    if (el) {
+                        el.value = t.key;
+                        t.valid ? el.classList.remove('is-invalid') : el.classList.add('is-invalid');
+                        const feedback = document.getElementById(`input-key-${t.id}-feedback`);
+                        if (feedback) feedback.innerText = t.error;
+                    }
 
                     const select = document.getElementById(`select-key-${t.id}`);
                     if (select) select.innerHTML = t.key == '' ? '&nbsp;' : t.key;
