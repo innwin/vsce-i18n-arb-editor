@@ -4,6 +4,11 @@ import * as _path from 'path';
 
 import { IJEData } from './ije-data';
 import { IJEDataTranslation } from './models/ije-data-translation';
+import { flutterGenerator } from './flutter-generator';
+
+function errorMessage(error: unknown): string {
+    return error instanceof Error ? error.message : String(error);
+}
 
 export class IJEManager {
 
@@ -30,7 +35,7 @@ export class IJEManager {
                     case 'pageSize': this._data.pageSize(+message.value); return;
                     case 'refresh': this.refreshDataTable(); return;
                     case 'remove': this._data.remove(message.id); return;
-                    case 'save': this._data.save(); vscode.window.showInformationMessage('i18n files saved'); return;
+                    case 'save': this.save(); return;
                     case 'search': this._data.search(message.value); return;
                     case 'select': this._data.select(message.id); return;
                     case 'sort': this._data.sort(message.column, message.ascending); return;
@@ -38,6 +43,22 @@ export class IJEManager {
                     case 'update': this._data.update(message.id, message.value, message.language); return;
                 }
             });
+    }
+
+    private async save() {
+        try {
+            this._data.save();
+        } catch (error) {
+            vscode.window.showErrorMessage(`Failed to save i18n files: ${errorMessage(error)}`);
+            return;
+        }
+        vscode.window.showInformationMessage('i18n files saved');
+        try {
+            const configuration = vscode.workspace.getConfiguration('i18nArbEditor', vscode.Uri.file(this.dirPath));
+            await flutterGenerator.generate(this.dirPath, configuration.get<boolean>('isFlutterAutoGenerate', true));
+        } catch (error) {
+            vscode.window.showErrorMessage(`i18n files were saved, but Flutter localization generation failed: ${errorMessage(error)}`);
+        }
     }
 
     refreshDataTable() {

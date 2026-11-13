@@ -10,7 +10,7 @@
 		"url": "https://github.com/innwin/vsce-i18n-arb-editor.git"
 	},
 	"description": "Easily edit your i18n arb files",
-	"version": "1.5.0",
+	"version": "1.5.1",
 	"engines": {
 		"vscode": "^1.30.0"
 	},
@@ -54,6 +54,12 @@
 					"default": "description.json",
 					"type": "string",
 					"description": "Description file name"
+				},
+				"i18nArbEditor.isFlutterAutoGenerate": {
+					"default": true,
+					"type": "boolean",
+					"scope": "resource",
+					"description": "Run flutter gen-l10n after saving files in a Flutter project"
 				}
 			}
 		}
@@ -68,6 +74,7 @@
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
+		"@types/js-yaml": "^4.0.5",
 		"@types/mocha": "^7.0.2",
 		"@types/node": "^13.11.0",
 		"@types/vscode": "^1.30.0",
@@ -81,6 +88,7 @@
 		"vscode-test": "^1.3.0"
 	},
 	"dependencies": {
+		"js-yaml": "^4.1.0",
 		"node-opencc": "^2.0.1"
 	}
 }

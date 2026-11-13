@@ -19,3 +19,5 @@ Right click on a directory containing **i18n** and select : **i18n arb Editor**
 - i18nArbEditor.defaultLanguageFileName : Default language file name (default : zh.json)
 
 - i18nArbEditor.descriptionFileName : Description file name (default : description.json)
+
+- i18nArbEditor.isFlutterAutoGenerate : Run `flutter gen-l10n` after saving in a Flutter project (default : true). The nearest `pubspec.yaml` must declare a Flutter SDK dependency. The command runs in that package's root directory, so Flutter must be available on PATH. Set this to false to disable automatic generation.
